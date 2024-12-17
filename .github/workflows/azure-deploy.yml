@@ -1,0 +1,45 @@
+name: Azure Deploy
+
+on:
+  push:
+    branches:
+    - main
+    
+    paths:
+        - 'generate-url-shortene/infrastructure/**'
+  pull_request:
+    paths:
+      - 'generate-url-shortene/infrastructure/**'
+  workflow_dispatch: # Allows you to run the workflow manually
+ 
+permissions:
+  contents: read
+  pull-requests: write    
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2.1.1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    
+      - uses: Azure/CLI@v2
+        with:
+          inlineScript: |
+            #!/bin/bash
+            az group create --name ${{ vars.RESOURCE_GROUP_NAME }} --location ${{ vars.RESOURCE_GROUP_LOCATION }}
+            echo "Resource Group Created"
+
+      - name: Deploy
+        uses: azure/arm-deploy@v2
+        with: 
+          scope: 'Resource Group'   
+          resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
+          template: generate-url-shortene/infrastructure/main.bicep
