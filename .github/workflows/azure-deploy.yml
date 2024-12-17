@@ -39,7 +39,7 @@ jobs:
         with:
           scope: resourceGroup
           resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
-          template: infrastructure/main.bicep
+          template: H:\Development\My project\Shortnere-url\generate-url-shortene\infrastructure\main.bicep
 
 
 
