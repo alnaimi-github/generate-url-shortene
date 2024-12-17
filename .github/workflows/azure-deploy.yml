@@ -7,6 +7,8 @@ on:
     paths:
       - 'generate-url-shortene/infrastructure/**'
   pull_request:
+    branches:
+      - main
     paths:
       - 'generate-url-shortene/infrastructure/**'
   workflow_dispatch: # Allows you to run the workflow manually
@@ -18,7 +20,7 @@ permissions:
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
-    environment: development
+    environment: Development
     steps:
       - uses: actions/checkout@v4
 
@@ -41,3 +43,59 @@ jobs:
           resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
           template: ./infrastructure/main.bicep
           failOnStdErr: true
+
+  deploy-stg:        
+    runs-on: ubuntu-latest
+    needs: deploy-dev
+    environment: Staging
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2.2.0
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - uses: azure/CLI@v2.1.0
+        with:
+          inlineScript: |
+            #!/bin/bash
+            az group create --name ${{ vars.RESOURCE_GROUP_NAME }} --location ${{ vars.RESOURCE_GROUP_LOCATION }}
+            echo "Resource Group Created"
+
+      - name: Deploy Bicep Template
+        uses: azure/arm-deploy@v2
+        with:
+          scope: resourcegroup
+          resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
+          template: ./infrastructure/main.bicep
+          failOnStdErr: true
+
+  deploy-prod:
+
+    runs-on: ubuntu-latest
+    needs: deploy-stg
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    environment: Production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2.2.0
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - uses: azure/CLI@v2.1.0
+        with:
+          inlineScript: |
+            #!/bin/bash
+            az group create --name ${{ vars.RESOURCE_GROUP_NAME }} --location ${{ vars.RESOURCE_GROUP_LOCATION }}
+            echo "Resource Group Created"
+
+      - name: Deploy Bicep Template
+        uses: azure/arm-deploy@v2
+        with:
+          scope: resourcegroup
+          resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
+          template: ./infrastructure/main.bicep
+          failOnStdErr: true        
