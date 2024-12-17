@@ -37,9 +37,7 @@ jobs:
       - name: Deploy Bicep Template
         uses: azure/arm-deploy@v2
         with:
-          scope: resourceGroup
+          scope: resourcegroup
           resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
-          template: H:\Development\My project\Shortnere-url\generate-url-shortene\infrastructure\main.bicep
-
-
-
+          template: ./generate-url-shortene/infrastructure/main.bicep
+          failOnStdErr: true
