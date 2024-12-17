@@ -37,10 +37,10 @@ jobs:
             az group create --name ${{ vars.RESOURCE_GROUP_NAME }} --location ${{ vars.RESOURCE_GROUP_LOCATION }}
             echo "Resource Group Created"
 
-       - name: Deploy Bicep Template
+      - name: Deploy Bicep Template
         uses: azure/arm-deploy@v1
         with:
             scope: resourcegroup
-            resourceGroupName: rg-urlshortener-dev
+            resourceGroupName: rg-urlshortener-2-dev
             template: infrastructure/main.bicep
             failOnStdErr: true
