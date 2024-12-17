@@ -40,7 +40,6 @@ jobs:
       - name: Deploy Bicep Template
         uses: azure/arm-deploy@v2
         with:
-            scope: resourcegroup
+            scope: resourceGroup
             resourceGroupName: rg-urlshortener-dev
-            template: infrastructure/main.bicep
-            failOnStdErr: true
+            template: ./infrastructure/main.bicep
