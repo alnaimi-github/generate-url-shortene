@@ -37,6 +37,7 @@ jobs:
       - name: Deploy Bicep Template
         uses: azure/arm-deploy@v2
         with:
-            scope: resourcegroup
-            resourceGroupName: rg-urlshortener-dev
-            template: ./infrastructure/main.bicep
+          scope: resource-group
+          resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
+          template: generate-url-shortene/infrastructure/main.bicep
+
