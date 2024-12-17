@@ -38,9 +38,9 @@ jobs:
             echo "Resource Group Created"
 
       - name: Deploy Bicep Template
-        uses: azure/arm-deploy@v1
+        uses: azure/arm-deploy@v2
         with:
             scope: resourcegroup
-            resourceGroupName: rg-urlshortener-2-dev
+            resourceGroupName: rg-urlshortener-dev
             template: infrastructure/main.bicep
             failOnStdErr: true
