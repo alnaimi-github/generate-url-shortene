@@ -39,6 +39,6 @@ jobs:
         with:
           scope: resourcegroup
           resourceGroupName: ${{ vars.RESOURCE_GROUP_NAME }}
-          template: ./infrastructure/main.bicep
+          template: 'generate-url-shortene/infrastructure/main.bicep'
           failOnStdErr: true
 
