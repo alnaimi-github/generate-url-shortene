@@ -29,7 +29,7 @@ az ad sp create-for-rbac --name "Github-Actions-SP" \
 ```powershell
 az ad sp create-for-rbac --name "Github-Actions-SP" `
                          --role contributor `
-                         --scopes /subscriptions/c19b5a5a-e3a7-495b-b6e3-14dbafe30ebd `
+                         --scopes /subscriptions/c39b5a5a-e3a7-495b-b6e3-84dbafe30ebd `
                          --sdk-auth
 ```
 
