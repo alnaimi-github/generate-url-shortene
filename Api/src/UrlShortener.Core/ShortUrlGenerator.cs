@@ -1,4 +1,6 @@
-﻿namespace UrlShortener.Api.Core.Tests;
+﻿using UrlShortener.Api.Core.Tests;
+
+namespace UrlShortener.Core;
 
 public class ShortUrlGenerator
 {

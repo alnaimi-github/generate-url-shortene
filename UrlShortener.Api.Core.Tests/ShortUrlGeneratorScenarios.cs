@@ -1,4 +1,6 @@
-﻿namespace UrlShortener.Api.Core.Tests;
+﻿using UrlShortener.Core;
+
+namespace UrlShortener.Api.Core.Tests;
 
 public class ShortUrlGeneratorScenarios
 {
@@ -11,7 +13,7 @@ public class ShortUrlGeneratorScenarios
 
         var shortUrl = shortUrlGenerator.GenerateShortUrl();
         
-        shortUrl.Should().Be("2bJ");
+        shortUrl.Should().Be("2Bj");
     }
     [Fact]
     public void Should_return_short_url_for_zero()
