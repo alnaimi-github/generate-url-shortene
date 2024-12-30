@@ -1,11 +1,19 @@
+using Azure.Identity;
+
 var builder = WebApplication.CreateBuilder(args);
 
+var keyVaultName = builder.Configuration["KeyVaultName"];
+if(!string.IsNullOrEmpty(keyVaultName))
+{
+    builder.Configuration.AddAzureKeyVault(
+        new Uri($"https://{keyVaultName}.vault.azure.net/"),
+        new DefaultAzureCredential());
+}
 
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
