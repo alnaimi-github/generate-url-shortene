@@ -11,8 +11,8 @@ public class TokenProvider
     {
         _tokenRange = tokenRange;
     }
-    public int GetToken()
+    public long GetToken()
     {
-        return _tokenRange!.Start;
+        return _tokenRange.Start;
     }
 }
