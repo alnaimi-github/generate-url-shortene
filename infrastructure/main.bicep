@@ -10,6 +10,19 @@ module keyVault 'modules/secrets/keyvault.bicep' = {
   }
 }
 
+module cosmosDb 'modules/storage/cosmos-db.bicep' = {
+  name: 'cosmosDbDeployment'
+  params: {
+    name: 'cosmos-db-${uniqueId}'
+    location: location
+    kind: 'GlobalDocumentDB'
+    databaseName: 'urls'
+    locationName: 'Spain Central'
+    keyVaultName: keyVault.outputs.name
+  }
+
+}
+
 module apiService 'modules/compute/appservice.bicep' = {
   name: 'apiDeployment'
   params: {
