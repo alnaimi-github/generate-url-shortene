@@ -11,7 +11,7 @@ public class ShortUrlGenerator
         _tokenProvider = tokenProvider;
     }
    
-    public string GenerateShortUrl()
+    public string  GenerateUniqueUrl()
     {
         return _tokenProvider
             .GetToken()

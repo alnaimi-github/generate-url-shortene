@@ -11,7 +11,7 @@ public class ShortUrlGeneratorScenarios
         tokenProvider.AssignRange(10001, 20000);
         var shortUrlGenerator = new ShortUrlGenerator(tokenProvider);
 
-        var shortUrl = shortUrlGenerator.GenerateShortUrl();
+        var shortUrl = shortUrlGenerator.GenerateUniqueUrl();
         
         shortUrl.Should().Be("2Bj");
     }
@@ -21,7 +21,7 @@ public class ShortUrlGeneratorScenarios
         var tokenProvider = new TokenProvider();
         tokenProvider.AssignRange(0, 10);
         var shortUrlGenerator = new ShortUrlGenerator(tokenProvider);
-        var shortUrl = shortUrlGenerator.GenerateShortUrl();
+        var shortUrl = shortUrlGenerator.GenerateUniqueUrl();
         shortUrl.Should().Be("0");
     }
 }
